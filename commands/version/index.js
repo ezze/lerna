@@ -396,8 +396,10 @@ class VersionCommand extends Command {
     } else {
       let hasBreakingChange;
 
-      for (const [name, bump] of versions) {
-        hasBreakingChange = hasBreakingChange || isBreakingChange(this.packageGraph.get(name).version, bump);
+      if (!this.ignoreBreakingChanges) {
+        for (const [name, bump] of versions) {
+          hasBreakingChange = hasBreakingChange || isBreakingChange(this.packageGraph.get(name).version, bump);
+        }
       }
 
       if (hasBreakingChange) {
